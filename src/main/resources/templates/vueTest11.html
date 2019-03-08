@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		Add Shopping Item : <input v-model="newItem"> <button v-on:click="addItem">添加</button>
+		<ul>
+			<li-component v-for="(item, index) in items" 
+			              v-bind:temp_str="item" 
+			              v-bind:key="item.id"
+			              v-on:remove="removeItem(index, $event)">
+	        </li-component>
+		</ul>
+		{{newItem}}
+	</div>
+</body>
+<script type="text/javascript">
+   // 模板上绑定点击事件，触发的事件是组件本身定义好的事件函数
+   // 但是我们可以在事件函数中使用  this.$emit("自定义事件类型", args) 的方式去触发父组件的事件
+   // 本演示中，传的是 remove 参数，相当于我们自定义了一种 remove 事件
+   // 只要我们在 <li-component> 标签上有使用 v-on:remove  监听这种事件，那么就会触发父组件里面的事件函数
+	Vue.component("li-component", {
+		props: ["temp_str"],
+		template: "<li>{{ temp_str.name }} <button v-on:click='componentMethod'>Remove</button> </li>",
+		methods:{
+			componentMethod: function(){
+				var args = [1, 2, 3];
+				this.$emit('remove', args);
+			}
+		}
+	});
+	
+	
+	var app = new Vue({
+		el : "#app",
+		data : {
+			items: [
+				{id: 0, name: "苹果"},
+				{id: 1, name: "桃子"},
+				{id: 2, name: "铅笔"},
+				{id: 3, name: "杯子"}
+			],
+			newItem: "",
+			newId: 4
+		},
+		methods : {
+			addItem: function(){
+				this.items.push({
+					id: this.newId++,
+					name: this.newItem
+				});
+				this.newItem = "";
+			},
+			removeItem: function(index, args){
+				this.items.splice(index, 1);
+				console.log(args);
+			}
+		} 
+	})
+</script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+<style>
+
+</style>
+</head>
+<body>
+	<div id="app">
+		<p :style="{'color': activeColor, 'font-size': fontSize}">你好呀</p><br>
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			activeColor: 'red',
+			fontSize: '25px' 
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script>
+</head>
+<body>
+	<div id="app" style="width: 100px; height: 100px; border: 1px solid black;">
+		<span v-bind:title="message">
+			鼠标悬停几秒钟查看此处动态绑定的提示信息！
+		</span>
+	</div>
+</body>
+<script type="text/javascript">
+	// 【注意】 这次我们绑定的不是标签体里面的内容，而是绑定一个标签的某个属性值
+	//        绑定标签体内容只需要在标签体内 添加这种格式的占位符即可  {{ code }}
+	//        绑定标签属性值的话，需要使用    v-bind:属性名   
+	
+	//   现在我们可以查看页面源码，然后在控制台上通过  app.message 修改span 标签的 title 属性值
+	//   不过我们一旦修改了 app.message 的值以后，再次放上去会发现 new Date() 方法已经不起作用了
+	//   虽然 js 代码没有变，但是 Vue 对象里面的值确实变了
+	var app = new Vue({
+		el : "#app",
+		data: {message : "页面加载于" + new Date().toLocaleString()}
+	})
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+<script src="moment.js" type="text/javascript" charset="utf-8"></script>
+<style>
+
+</style>
+</head>
+<body>
+	<div id="app">
+		<p ref="myPTag">Hello world vue!</p>
+		<button v-on:click="hello">hello</button>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	var vm = new Vue({
+		el: "#app",
+		data: {},
+		methods: {
+			hello : function(){
+				alert(this.$refs.myPTag.textContent);
+			}
+		}
+	})
+</script>
+</html>

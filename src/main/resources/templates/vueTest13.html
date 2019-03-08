@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<my-component>
+			<span v-if="username" v-text="username"></span>
+		</my-component>
+	</div>
+</body>
+<script type="text/javascript">
+	Vue.component("my-component", {
+		template: `<div>
+						你好， <slot>游客</slot>
+					</div>`
+	})
+	
+	var app = new Vue({
+		el: "#app",
+		data: {username: "eric"}
+	})
+</script>
+</html>

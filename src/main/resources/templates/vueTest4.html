@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<!-- 遍历 Vue 对象中的 items 数组，把取出里面的每个元素的 text 值 
+		    <li v-for="(item, index) in items">
+				{{index}} : {{ item.text }}
+			</li>
+			-->
+			
+			<li v-for="(value, key) in object">
+				{{key}} : {{value}}
+			</li>
+		</ul>
+	</div>
+</body>
+<script type="text/javascript">
+    // 现在 ul 标签已经跟  Vue 对象中的 items 绑定，我们可以直接通过  app.items 操作数组来修改 ul 标签下面的子标签
+    // 比如我们  app.items.pop()   弹出一个对象，那么  li 标签应该会少一个
+    //        app.items.push({text: "java"}) 添加一个对象
+	/* var app = new Vue({
+		el : "#app",
+		data: {
+			items : [
+						{text: "hello"},
+						{text: "world"},
+						{text: "spring"},
+						{text: "boot"}
+					]
+		}
+	}) */
+    
+	var app = new Vue({
+		el : "#app",
+		data: {
+			object : {name: "jack", age: 12, gender: "male"}
+		}
+	})
+</script>
+</html>

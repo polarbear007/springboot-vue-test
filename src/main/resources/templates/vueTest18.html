@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+<style>
+
+</style>
+</head>
+<body>
+	<div id="app">
+		<p>username: <input v-model="username"></p>
+		<p>gender: 
+		   <input type="radio" v-model="gender" value="male" />male
+		   <input type="radio" v-model="gender" value="female" />female
+		 </p>
+		<p>intersts:
+		   <input type="checkbox" v-model="intersts" value="reading" /> reading
+		   <input type="checkbox" v-model="intersts" value="sport" /> sport
+		   <input type="checkbox" v-model="intersts" value="cooking" /> cooking
+		   <input type="checkbox" v-model="intersts" value="watching tv" /> watching tv
+		</p>
+		<p>province:
+			<select v-model="province">
+				<option value ="">请选择省份</option>
+				<option value ="beijin">北京</option>
+				<option value ="shanghai">上海</option>
+				<option value ="guangdong">广东</option>
+			</select>
+		</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			// 如果我们想要设置默认值的话,那么可以给username 指定一个默认值
+			username: '',
+			// 如果我们想要指定默认性别的话,那么可以像下面给gender 指定一个默认值
+			gender: 'male',
+			// 如果我们想要给指定默认兴趣的话,那么可以给数组添加一些默认的选项值
+			intersts: [],
+			// 如果我们想要指定默认的省份的话,可以指定某个省份的默认值
+			province: ''
+		}
+	})
+</script>
+</html>

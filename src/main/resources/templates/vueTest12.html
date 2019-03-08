@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<my-component v-bind:temp="wrapper" ></my-component>
+		获取到的内容：<span>{{wrapper.message}}</span>
+	</div>
+</body>
+<script type="text/javascript">
+	Vue.component("my-component",{
+		props: ["temp"],
+		template: "<div>"+
+		              " 试图同步获取输入框的内容："+
+		              "<input v-bind:value='temp.message' v-on:input='change'><br>"+
+	               "</div>",
+		methods: {
+			change: function(event){
+				this.temp.message = event.target.value;
+			}
+		}
+	})
+  	var app = new Vue({
+  		el : "#app",
+  		data: {wrapper: {message : ""}}
+  	})
+</script>
+</html>

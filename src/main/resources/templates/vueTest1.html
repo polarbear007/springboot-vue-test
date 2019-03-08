@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script>
+</head>
+<body>
+	<div id="app">
+		{{ message }}<br>
+		<!-- {{message }} 注入的数据不管是什么，都按字符串处理
+		            -如果我们想要注入的是一个带 html 标签的话，那么可以使用 v-html 替换 -->
+		
+		<span v-html="message2"></span><br>
+		{{message3 }}<br>
+	</div>
+
+	<hr>
+	
+</body>
+<script type="text/javascript">
+	// 注意， 这个new Vue() 是固定写法，而且要注意大小写敏感
+	// Vue 对象的构造方法需要传入一个对象，这个对象里面有固定的参数值
+	//      el 就是写标签选择器，把此 Vue 对象与特定的标签绑定起来【重要】
+	//      data 就是保存  用来替换标签体里面各种占位符的具体数据
+	var app = new Vue({
+		el: "#app",
+		data: {message : "hello vue", 
+			   message2 : "<font color='red'>你能看到红色字体吗？</font>",
+			   message3 : "<font color='red'>你能看到红色字体吗？</font>"
+		}
+	})
+	
+	// 注意， 直接使用 app.message 即可以拿到 message 对象，不能使用  app.data.message
+	// 【注意】 现在那个 div 标签的标签体内容已经跟  app.message 对象绑定在一起了，我们随时可以通过控制台
+	//        修改 app.message 的值， div 里面的值也会跟着变化 
+	app.message="hello springboot";
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<li-component v-bind:temp="wrapper"></li-component><br>
+		<li-component v-bind:temp="wrapper"></li-component><br>
+		<li-component v-bind:temp="wrapper"></li-component><br>
+	</div>
+</body>
+<script type="text/javascript"> 
+   Vue.component("li-component", {
+	   props: ["temp"],
+	   template: "<button v-on:click='temp.count++'>你点击了{{ temp.count }} 次</button>"
+   })
+	
+   new Vue({
+	   el: "#app",
+	   data:{wrapper: {count: 0}}
+   })
+</script>
+</html>

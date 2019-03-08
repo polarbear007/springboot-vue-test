@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+<script src="moment.js" type="text/javascript" charset="utf-8"></script>
+<style>
+
+</style>
+</head>
+<body>
+	<div id="app">
+		<form id="addPersonForm" th:action="@{/addPerson}" method="post">
+			<p>username: <input name="username" v-model="person.username"></p>
+			<p>birthDate: <input name="birthDate" v-model="person.birthDate" /></p>			
+			<p>gender: 
+			   <input type="radio" name="gender"  v-model="person.gender" value="male" />male
+			   <input type="radio" name="gender" v-model="person.gender" value="female" />female
+			 </p>
+			<p>intersts:
+			   <input type="checkbox"  name="intersts" v-model="person.intersts" value="reading" /> 读书
+			   <input type="checkbox"  name="intersts" v-model="person.intersts" value="sport" /> 运动
+			   <input type="checkbox"  name="intersts" v-model="person.intersts" value="cooking" /> 烹饪
+			   <input type="checkbox"  name="intersts" v-model="person.intersts" value="watching tv" /> 看电视
+			</p>
+			<p>province:
+				<select name="province" v-model="person.province">
+					<option value ="">请选择省份</option>
+					<option value ="beijin">北京</option>
+					<option value ="shanghai">上海</option>
+					<option value ="guangdong">广东</option>
+				</select>
+			</p>
+			<p><button type="button" v-on:click="addPerson">异步提交json格式表单数据</button></p>
+			<p><button type="button" v-on:click="addPerson2">异步提交key-value对表单数据</button></p>
+			<p><button type="button" v-on:click="addPerson3">普通提交表单数据</button></p>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			person: {
+				username: '',
+				birthDate: '',
+				gender: 'male',
+				intersts: [],
+				province: ''
+			}
+		},
+		methods:{
+			// 异步发送 json 格式数据
+			addPerson: function(){
+				var data = JSON.stringify(this.person);
+				$.ajax({
+					type : "post",
+					// 发送json 格式数据，就使用默认的 action 地址
+					url : $('#addPersonForm').attr('action'),
+					data: data,
+					contentType : "application/json;charset=utf-8" ,
+					success : function(data){
+						// 这里我们把服务器返回的 person 对象直接替换 vue 实例里面的 person 对象
+						// 看看 html 页面上的数据会不会跟着变化 
+						vm.person = data;
+					},
+					error : function(){
+						alert("请求失败");
+					},
+					dataType : "json"
+				})
+			},
+			// 异步发送 key-value 对格式数据
+			addPerson2: function(){
+				// 提交异步普通的 key-value 对格式数据，我们需要把表单数据先序列化
+				var data = $('#addPersonForm').serialize();
+				// 发送 key-value 对格式的数据，我们就在原来的 action 地址后面拼接一个2
+				var url = $('#addPersonForm').attr('action') + '2';
+				$.post(
+					url, // url
+					data,
+					function(data){
+						vm.person = data;
+					},
+					"json"
+				);
+			},
+			// 普通提交表单
+			addPerson3: function(){
+				// 发送普通表单数据，我们就把原来action 地址后面拼接一个 3
+				var url = $('#addPersonForm').attr('action') + '3';
+				console.log(url);
+				// 设置新的 action 地址，并提交表单
+				$('#addPersonForm').attr('action', url).submit();
+			}
+		}
+	})
+</script>
+</html>

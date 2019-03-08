@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script>
+</head>
+<body>
+	<div id="app">
+		<ol>
+			<li-component v-for="site in sites" :temp="site" :key="site.id"></li-component>
+		</ol>
+	</div>
+</body>
+<script type="text/javascript">
+	// 【重点】 如何定义 Vue 组件模板
+	//        <li-component>  相当于我们自己定义的一个标签，我们可以直接使用这个标签去引用事先定义好的模板
+	//        这里的模板太简单了，所以可能看起来没有什么必要，用一个 <li-component> 来替换 <li>li组件</li>
+	//        真实的开发中，我们的模板可能是一大串复杂的标签组合，然后我们可以直接使用一个简单的标签来替换
+	Vue.component("li-component",{
+		props: ["temp"],
+		template: "<li><a v-bind:href='temp.address'> {{ temp.siteName }} </a></li>"
+	})
+	
+	// 【注意】 并不是声明了组件，就可以直接在 html 里面使用了
+	//       如果我们想要在 div 里面使用自定义的组件模板，那么我们就必须先把 div 标签与一个特定的 Vue 对象绑定在一起
+	//       这样，那些自定义的组件才会生效
+	var app = new Vue({
+		el : "#app",
+		data: {
+			sites: [
+				{id: 0, siteName: "百度", address: "https://www.baidu.com"}, 
+				{id: 1, siteName: "vue官网", address: "https://vuejs.bootcss.com"},
+				{id: 2, siteName: "github", address: "https://github.com/"}
+			]
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+<script src="moment.js" type="text/javascript" charset="utf-8"></script>
+<style>
+
+</style>
+</head>
+<body>
+	<div id="app">
+		默认日期时间格式：<span>{{date}}</span><br>
+		显示日期+时间：<span>{{date | dateToStr}}</span><br>
+		显示日期：<span>{{date | dateToStr('YYYY-MM-DD')}}</span><br>
+		显示时间: <span>{{date | dateToStr('HH:mm:ss')}}</span>
+	</div>
+</body>
+<script type="text/javascript">
+	// 注册一个全局的过滤器, 这个过滤器的名字就叫 dateToStr
+	// 然后在这个过滤器内部设置一个处理函数,这个函数的第一个对象默认是要处理的对象
+	// 后面的参数就是自定义的参数了
+	Vue.filter("dateToStr" , function(dateObject, format){
+		// 如果 dateObject 参数是null 或者 undefined 的话,那么直接返回 ""
+		// 如果 dateObject 参数有效,那么我们就调用 monent.js 的方法来格式化日期
+		// moment.js 的api 非常简单
+		//  moment()  默认是包装当前的日期对象
+		//  moment(date)  里面可以传入一个 Date 类型的参数，包装这个Date 对象
+		//  包装完以后,我们就可以调用 monent.js 提供的 format() 方法对日期进行格式化
+		//  format(pattern)  方法里面可以传入一个 日期格式的 pattern 参数
+		//                   这个pattern 跟 java 里面的格式基本一致,只是 yyyy 要变成 YYYY, dd 要变成 DD
+		//                   最为常用的格式就是 :  YYYY-MM-DD HH:mm:ss   ,  其他的格式你可以去官网自己查
+		if(dateObject){
+			return moment(dateObject).format(format || 'YYYY-MM-DD HH:mm:ss');
+		}else{
+			return "";
+		}
+	});
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			date: new Date()
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		firstName: <input v-model="firstName" /><br>
+		lastName: <input v-model="lastName" /><br>
+		fullName: <input v-model="fullName" />
+	</div>
+</body>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			firstName: "Bill",
+			lastName: "Gates"
+		},
+		computed:{
+			fullName: {
+				get: function(){
+					console.log("fullName 发生了变化！");
+					return this.firstName + " " + this.lastName;
+				},
+				set: function(newValue){
+					console.log("fullName 被赋值了！");
+					// [注意] 为了维护 fullName 和 firstName / lastName 的一致性关系
+					//       我们在给 fullName 赋值的时候,也需要同步去修改 firstName / lastName的值
+					var names = newValue.split(' ');
+					this.firstName = names[0];
+					this.lastName = names[1];
+				}
+			}
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script> -->
+<!-- <script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<keep-alive>
+			<div v-bind:is="componentName"></div>
+		</keep-alive>
+	</div>
+</body>
+<script type="text/javascript">
+	Vue.component("sub-component1",{
+		template: `<div>
+						<font color='red'>This is sub-component1===> count: {{count}}</font>
+						<button v-on:click="countClick">计数</button>
+					</div>`,
+		data: function(){
+			return {count: 0 };
+		},
+		methods: {
+			countClick: function(){
+				this.count++;
+			}
+		}
+	})
+	Vue.component("sub-component2",{
+		template: `<div>
+						<font color='green'>This is sub-component2===> count: {{count}}</font>
+						<button v-on:click="countClick">计数</button>
+					</div>`,
+		data: function(){
+			return {count: 0 };
+		},
+		methods: {
+			countClick: function(){
+				this.count++;
+			}
+		}
+	})
+	Vue.component("sub-component3",{
+		template: `<div>
+						<font color='blue'>This is sub-component3===> count: {{count}}</font>
+						<button v-on:click="countClick">计数</button>
+					</div>`,
+		data: function(){
+			return {count: 0 };
+		},
+		methods: {
+			countClick: function(){
+				this.count++;
+			}
+		}
+	})
+	
+	var app = new Vue({
+		el: "#app",
+		data: {componentName: "sub-component1"}
+	})
+</script>
+</html>

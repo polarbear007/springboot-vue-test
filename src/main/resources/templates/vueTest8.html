@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script>
+</head>
+<body>
+	<div id="app">
+		<ol>
+			<li-component v-for="item in items" v-bind:temp="item" v-bind:key="item.id"></li-component>
+		</ol>
+	</div>
+	
+</body>
+<script type="text/javascript">
+	// props: ['temp']   是给这个  <li-component  temp="">   设置一个 temp 属性，属性名是随便起的
+	// 然后， 先用 v-for 遍历 items 数组，拿到每个元素 item 
+	// 再然后，使用  v-bind：temp  把 item 的值绑定到自定义组件的  temp 属性上
+	// 最后，我们在 模板中，引用自定义组件的 temp 属性值，其实就是拿到 item 的值
+	Vue.component("li-component",{
+		props: ['temp'],
+		template: "<li>{{temp.text}}</li>"
+	})
+	
+	// 同样，这个自定义的组件要生效，我们必须把 div 绑定到一个特定的 Vue 对象上
+	var app = new Vue({
+		el : "#app",
+		data: {
+			items: [
+				     {id: 0, text:　"hello"},
+				     {id: 1, text:　"world"},
+				     {id: 2, text:　"spring"},
+				     {id: 3, text:　"boot"}
+					]
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script type="text/javascript" th:src="@{/webjars/jquery/3.3.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/vue/2.6.7/dist/vue.js}"></script> -->
+<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		Add Shopping Item : <input v-model="newItem"> <button v-on:click="addItem">添加</button>
+		<ul>
+			<!-- v-for 不仅可以遍历items拿到 item, 还可以拿到索引 index -->
+			<li v-for="(item,index) in items" v-bind:key="item.id">
+				 {{ item.name }}
+				 <button v-on:click="removeItem(index)">删除</button>
+			</li>
+		</ul>
+	</div>
+</body>
+<script type="text/javascript">
+	var app = new Vue({
+		el : "#app",
+		data : {
+			items: [
+				{id: 0, name: "苹果"},
+				{id: 1, name: "桃子"},
+				{id: 2, name: "铅笔"},
+				{id: 3, name: "杯子"}
+			],
+			newItem: "",
+			// 这个 newId 就是对应 items 里面的 id 的，值是什么不要紧，只要不重复就可以了
+			// 这个值一直累加就好了
+			newId: 4
+		},
+		methods : {
+			// 注意，
+			addItem: function(){
+				this.items.push({
+					id: this.newId++,
+					name: this.newItem
+				});
+				this.newItem = "";
+			},
+			removeItem: function(index){
+				// 因为 li 元素里面的值跟 vue 对象本身是单向绑定的
+				// 所以我们要删除的话，一定要通过操作 vue 对象里面的数据，间接操作页面的数据
+				// 不能反过来，直接通过 dom 操作，删除 li 元素，这样子，页面上看虽然 li 元素已经删除
+				// 但是 vue 对象里面的数据还在，最后就很可能会造成问题
+				this.items.splice(index, 1);
+			}
+		} 
+	})
+</script>
+</html>
